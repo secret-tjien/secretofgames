@@ -1,0 +1,8 @@
+{
+  "name": "SecretOfGames",
+  "description": "Freelance website of Tj\u0027ièn Twijnstra",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
