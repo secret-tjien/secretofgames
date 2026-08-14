@@ -40,7 +40,7 @@ export interface Book {
   };
 }
 
-const DEFAULT_PERSONAL_NOTE = 'Met persoonlijke spreuk van Theije Twijnstra, alleen op voltare.nl';
+const DEFAULT_PERSONAL_NOTE = 'Met persoonlijke spreuk van Theije Twijnstra, alleen op secretofgames.com';
 
 export const books: Book[] = [
   {

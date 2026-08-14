@@ -306,9 +306,9 @@ export default function App() {
         }
 
         // Expose progress and scroll metrics globally for Layer0 animation loop
-        (window as any).__VOLTARE_SCROLL_PROGRESS = progress;
-        (window as any).__VOLTARE_SCROLL_TOP = scrollTop;
-        (window as any).__VOLTARE_BLINDS_MAX_SCROLL = blindsMaxScroll;
+        (window as any).__SECRETOFGAMES_SCROLL_PROGRESS = progress;
+        (window as any).__SECRETOFGAMES_SCROLL_TOP = scrollTop;
+        (window as any).__SECRETOFGAMES_BLINDS_MAX_SCROLL = blindsMaxScroll;
       });
     };
 

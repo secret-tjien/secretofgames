@@ -1,6 +1,6 @@
-# Voltare — Boeken & Zelfhulp
+# Secret of Games
 
-An interactive webshop for books by Theije Twijnstra, built with React, Vite, Tailwind CSS, and Stripe Checkout.
+Website and resources for Secret of Games by Tj'ièn Twijnstra, built with React, Vite, and Tailwind CSS.
 
 ## 🚀 Deployment
 

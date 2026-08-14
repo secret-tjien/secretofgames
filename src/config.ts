@@ -4,7 +4,7 @@ import part3Icon from './files/part3.png';
 import part4Icon from './files/part4.png';
 
 /**
- * Voltare Global Configuration
+ * Secret of Games Global Configuration
  * Tweak these values to change the feel of the layers, colors, and interactions.
  */
 export const CONFIG = {
@@ -95,7 +95,7 @@ export const CONFIG = {
 
   // Storage and Performance
   storage: {
-    key: 'voltare_interactions',
+    key: 'secretofgames_interactions',
     saveIntervalMs: 2000,      // How often to write to sessionStorage (ms)
   },
 

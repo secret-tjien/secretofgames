@@ -88,7 +88,7 @@ export default function Layer0({ showParticles = true }: Layer0Props) {
       currentPos.current.x += (targetPos.current.x - currentPos.current.x) * CONFIG.layer0.transitionSpeed * 2;
       currentPos.current.y += (targetPos.current.y - currentPos.current.y) * CONFIG.layer0.transitionSpeed * 2;
 
-      const progress = (window as any).__VOLTARE_SCROLL_PROGRESS || 0;
+      const progress = (window as any).__SECRETOFGAMES_SCROLL_PROGRESS || 0;
 
       // Update dynamic background gradient div
       if (bgRef.current) {
@@ -130,8 +130,8 @@ export default function Layer0({ showParticles = true }: Layer0Props) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (showParticles) {
-          const scrollTop = (window as any).__VOLTARE_SCROLL_TOP || 0;
-          const blindsMaxScroll = (window as any).__VOLTARE_BLINDS_MAX_SCROLL || (window.innerHeight * 1.5);
+          const scrollTop = (window as any).__SECRETOFGAMES_SCROLL_TOP || 0;
+          const blindsMaxScroll = (window as any).__SECRETOFGAMES_BLINDS_MAX_SCROLL || (window.innerHeight * 1.5);
           const scrollBeyond = Math.max(0, scrollTop - blindsMaxScroll);
 
           ctx.save();

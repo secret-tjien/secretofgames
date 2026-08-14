@@ -1,6 +1,6 @@
-# Deploying Voltare to Cloudflare Pages
+# Deploying Secret of Games to Cloudflare Pages
 
-This guide walks you through deploying the Voltare shop application to **Cloudflare Pages** using GitHub Git integration, with serverless API functions for Stripe Checkout.
+This guide walks you through deploying the Secret of Games application to **Cloudflare Pages** using GitHub Git integration, with serverless API functions for Stripe Checkout.
 
 ---
 
@@ -38,7 +38,7 @@ This guide walks you through deploying the Voltare shop application to **Cloudfl
 2. Navigate to **Workers & Pages** -> **Create application** -> **Pages** -> **Connect to Git**.
 3. Authorize Cloudflare to access your GitHub account and select your repository.
 4. Configure build settings:
-   - **Project Name**: `voltare` (or your preferred domain prefix)
+   - **Project Name**: `secretofgames` (or your preferred domain prefix)
    - **Production Branch**: `main`
    - **Framework Preset**: `Vite`
    - **Build Command**: `npm run build`
@@ -56,8 +56,8 @@ In Cloudflare Pages, go to **Settings** -> **Environment variables** (Add to bot
 | `STRIPE_SECRET_KEY` | Stripe Secret Key (**Required**) | `sk_test_51...` or `sk_live_51...` |
 | `STRIPE_WEBHOOK_SECRET` | Webhook signing secret | `whsec_...` |
 | `SHIPPING_RATE_ID` | Stripe Shipping Rate ID | `shr_1TvhlTJKRoSezgT6lCmYqqdN` |
-| `SUCCESS_URL` | Redirect after successful checkout | `https://voltare.nl?success=true` |
-| `CANCEL_URL` | Redirect when checkout is canceled | `https://voltare.nl?canceled=true` |
+| `SUCCESS_URL` | Redirect after successful checkout | `https://secretofgames.com?success=true` |
+| `CANCEL_URL` | Redirect when checkout is canceled | `https://secretofgames.com?canceled=true` |
 | `NODE_VERSION` | Recommended Node runtime version | `20` |
 
 *Note: Never expose secret keys in client-side code. All Stripe secret operations execute strictly inside Cloudflare Pages Functions (`/api/*`).*
@@ -72,7 +72,7 @@ In Cloudflare Pages, go to **Settings** -> **Environment variables** (Add to bot
    ```text
    https://YOUR-PAGES-SUBDOMAIN.pages.dev/api/webhooks/stripe
    ```
-   *(or `https://voltare.nl/api/webhooks/stripe` if using a custom domain)*
+   *(or `https://secretofgames.com/api/webhooks/stripe` if using a custom domain)*
 4. Select event to listen to:
    - `checkout.session.completed`
 5. Click **Add endpoint**.
