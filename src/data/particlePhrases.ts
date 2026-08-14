@@ -189,7 +189,7 @@ export const PARTICLE_PHRASES: string[] = [
   'Monetization',
   'ARPDAU',
   'Retention curves',
-  'Funnel',
+  'User Funnel',
   'Conversion',
   'Soft launch markets',
   'Store optimization',
@@ -227,4 +227,6 @@ export const PARTICLE_PHRASES: string[] = [
   'Integration conflict',
   'Merge day',
   'Someone broke the build',
+  'Low hanging fruit',
+  'Design by committee',
 ];
