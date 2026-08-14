@@ -2,12 +2,29 @@ import part1Icon from './files/part1.png';
 import part2Icon from './files/part2.png';
 import part3Icon from './files/part3.png';
 import part4Icon from './files/part4.png';
+import { PARTICLE_PHRASES } from './data/particlePhrases';
 
 /**
  * Secret of Games Global Configuration
  * Tweak these values to change the feel of the layers, colors, and interactions.
  */
 export const CONFIG = {
+  // Particle Callout List (imported from src/data/particlePhrases.ts)
+  particleCalloutWords: PARTICLE_PHRASES,
+
+  // Particle Callout Aesthetics & Colors
+  particleCallout: {
+    minSaturation: 35,         // % Saturation min (lower = more muted/pastel)
+    maxSaturation: 55,         // % Saturation max
+    minLightness: 52,          // % Lightness min (higher = lighter pastel)
+    maxLightness: 65,          // % Lightness max
+    boxSize: 18,               // Size of the square around particle (px)
+    diagonalLengthX: 32,       // Diagonal leader line X distance (px)
+    diagonalLengthY: 24,       // Diagonal leader line Y distance (px)
+    springEase: 0.08,          // Rubber-band lag speed (lower = more trailing)
+    durationFrames: 150,       // Duration in frames before fade out (~2.5-3s)
+  },
+
   // Brand Colors
   colors: {
     primary: '#E60489',        // Primary color, e.g., for button texts

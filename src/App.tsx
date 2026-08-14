@@ -483,11 +483,10 @@ export default function App() {
                 {CONFIG.scrollHint?.enabled && (
                   <div
                     ref={scrollHintRef}
-                    className="absolute bottom-6 left-0 right-0 mx-auto w-max z-15 flex flex-col items-center text-center select-none pointer-events-none animate-scroll-hint-fade-in"
+                    className="absolute bottom-28 sm:bottom-32 md:bottom-36 left-0 right-0 mx-auto w-max z-15 flex flex-col items-center text-center select-none pointer-events-none animate-scroll-hint-fade-in mb-[env(safe-area-inset-bottom,0px)]"
                   >
-                    <div className="animate-scroll-hint-bounce flex flex-col items-center gap-0.5 text-black font-bold text-xs md:text-sm tracking-wide drop-shadow-[0_1px_2px_rgba(255,255,255,0.7)]">
-                      <span>{CONFIG.scrollHint.text}</span>
-                      <ChevronsDown className="w-5 h-5 text-black stroke-[2.5]" />
+                    <div className="animate-scroll-hint-bounce flex flex-col items-center drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]">
+                      <ChevronsDown className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 text-black stroke-[2.25]" />
                     </div>
                   </div>
                 )}
