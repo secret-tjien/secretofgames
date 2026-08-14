@@ -113,9 +113,6 @@ export default function Layer0({ showParticles = true }: Layer0Props) {
     const checkPointerNearParticles = (clientX: number, clientY: number, isExplicitClick = false) => {
       if (!canvas) return;
       
-      // Reset auto-activation timer on user activity
-      lastInteractionTime = performance.now();
-      
       const rect = canvas.getBoundingClientRect();
       const mouseX = clientX - rect.left;
       const mouseY = clientY - rect.top;
@@ -231,7 +228,12 @@ export default function Layer0({ showParticles = true }: Layer0Props) {
     let animationFrame: number;
     let time = 0;
     let lastTime = performance.now();
-    let lastInteractionTime = performance.now();
+    let lastAutoActivationTime = performance.now();
+    let lastScrollTime = performance.now();
+    
+    // Scroll hint state
+    let scrollHint = { active: false, startTime: 0 };
+    
     const fpsInterval = 1000 / 30; // 30fps for smooth performance
 
     const animate = (now: number) => {
@@ -243,7 +245,7 @@ export default function Layer0({ showParticles = true }: Layer0Props) {
 
       // Automatic activation logic - maintain 1-3 active call-outs
       const activeCallouts = particles.filter(p => p.callout && p.callout.fadeAlpha > 0);
-      if (now - lastInteractionTime >= 2000) {
+      if (now - lastAutoActivationTime >= 2000) {
         if (activeCallouts.length < 3) {
           const availableParticles = particles.filter(p => !p.callout);
           if (availableParticles.length > 0) {
@@ -251,14 +253,20 @@ export default function Layer0({ showParticles = true }: Layer0Props) {
             triggerCalloutOnParticle(pt, false, true);
           }
         }
-        lastInteractionTime = now;
+        lastAutoActivationTime = now;
+      }
+      
+      // Scroll hint logic
+      const progress = (window as any).__SECRETOFGAMES_SCROLL_PROGRESS || 0;
+      if (progress > 0.02) {
+        lastScrollTime = now;
+      } else if (now - lastScrollTime >= 5000 && !scrollHint.active) {
+        scrollHint = { active: true, startTime: now };
       }
 
       time += 32 * CONFIG.layer0.orbitSpeed;
       currentPos.current.x += (targetPos.current.x - currentPos.current.x) * CONFIG.layer0.transitionSpeed * 2;
       currentPos.current.y += (targetPos.current.y - currentPos.current.y) * CONFIG.layer0.transitionSpeed * 2;
-
-      const progress = (window as any).__SECRETOFGAMES_SCROLL_PROGRESS || 0;
 
       // Update dynamic background gradient div
       if (bgRef.current) {
@@ -474,6 +482,73 @@ export default function Layer0({ showParticles = true }: Layer0Props) {
               ctx.fillText(co.word, textX, textY);
 
               ctx.restore();
+            }
+          }
+
+          ctx.restore();
+        }
+      }
+
+      // Draw "S C R O L L    D O W N" Sequential Scroll Hint
+      if (scrollHint.active) {
+        const elapsed = now - scrollHint.startTime;
+        const totalAnimationDuration = 5200; // Complete cycle: sequential in, hold, fade out
+
+        if (elapsed > totalAnimationDuration) {
+          scrollHint.active = false;
+          lastScrollTime = now; // Reset timer to ensure full pause before retriggering
+        } else {
+          ctx.save();
+          // Font matching the design system
+          ctx.font = '700 13px "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
+          ctx.shadowBlur = 4;
+
+          // "S C R O L L    D O W N" (S_C_R_O_L_L____D_O_W_N)
+          // 1 space between letters, 4 spaces between words
+          const letterSpacing = 16;
+          const letterItems = [
+            { char: 'S', offset: -6 * letterSpacing, delay: 0 },
+            { char: 'C', offset: -5 * letterSpacing, delay: 100 },
+            { char: 'R', offset: -4 * letterSpacing, delay: 200 },
+            { char: 'O', offset: -3 * letterSpacing, delay: 300 },
+            { char: 'L', offset: -2 * letterSpacing, delay: 400 },
+            { char: 'L', offset: -1 * letterSpacing, delay: 500 },
+            // Gap = 4 * letterSpacing (from -16 to +48)
+            { char: 'D', offset: 3 * letterSpacing, delay: 680 },
+            { char: 'O', offset: 4 * letterSpacing, delay: 780 },
+            { char: 'W', offset: 5 * letterSpacing, delay: 880 },
+            { char: 'N', offset: 6 * letterSpacing, delay: 980 },
+          ];
+
+          // Compute Y coordinate to position cleanly above the animated chevron
+          const isDesktop = canvas.width >= 768;
+          const isTablet = canvas.width >= 640 && canvas.width < 768;
+          const chevronTopOffset = isDesktop ? 228 : isTablet ? 208 : 185;
+          const textY = canvas.height - chevronTopOffset;
+          const centerX = canvas.width / 2;
+
+          for (let i = 0; i < letterItems.length; i++) {
+            const item = letterItems[i];
+            const charElapsed = elapsed - item.delay;
+            let alpha = 0;
+
+            if (charElapsed > 0 && charElapsed < 250) {
+              // Smooth entry fade in
+              alpha = charElapsed / 250;
+            } else if (charElapsed >= 250 && charElapsed < 3200) {
+              // Steady hold
+              alpha = 1;
+            } else if (charElapsed >= 3200 && charElapsed < 4200) {
+              // Smooth exit fade out
+              alpha = Math.max(0, 1 - (charElapsed - 3200) / 1000);
+            }
+
+            if (alpha > 0.005) {
+              ctx.fillStyle = `rgba(0, 0, 0, ${alpha.toFixed(3)})`;
+              ctx.fillText(item.char, centerX + item.offset, textY);
             }
           }
 
